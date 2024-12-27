@@ -113,6 +113,10 @@ export default function Demo() {
 		sdk.actions.openUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 	}, []);
 
+	const close = useCallback(() => {
+		sdk.actions.close();
+	}, []);
+
 	if (!isSDKLoaded) {
 		return <div>Loading...</div>;
 	}
@@ -159,6 +163,16 @@ export default function Demo() {
 					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
 					<button onClick={openUrl}>Open Link</button>
 				</div>
+			</div>
+
+			<div className="mb-4">
+				<div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
+					<pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
+						sdk.actions.close
+					</pre>
+				</div>
+				{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+				<button onClick={close}>Close Frame</button>
 			</div>
 		</div>
 	);
