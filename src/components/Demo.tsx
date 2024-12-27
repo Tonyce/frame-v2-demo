@@ -20,7 +20,7 @@
 // 		</div>
 // 	);
 // }
-
+/** 
 import { useEffect, useCallback, useState } from "react";
 import sdk, { type FrameContext } from "@farcaster/frame-sdk";
 
@@ -44,6 +44,11 @@ export default function Demo() {
 		setIsContextOpen((prev) => !prev);
 	}, []);
 
+	const openUrl = useCallback(() => {
+    sdk.actions.openUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  }, []);
+
+
 	if (!isSDKLoaded) {
 		return <div>Loading...</div>;
 	}
@@ -54,7 +59,6 @@ export default function Demo() {
 
 			<div className="mb-4">
 				<h2 className="font-2xl font-bold">Context</h2>
-				{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
 				<button
 					onClick={toggleContext}
 					className="flex items-center gap-2 transition-colors"
@@ -76,6 +80,57 @@ export default function Demo() {
 						</pre>
 					</div>
 				)}
+			</div>
+		</div>
+	);
+}
+*/
+
+import { useEffect, useCallback, useState } from "react";
+import sdk, { type FrameContext } from "@farcaster/frame-sdk";
+
+export default function Demo() {
+	const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+	const [context, setContext] = useState<FrameContext>();
+	const [isContextOpen, setIsContextOpen] = useState(false);
+
+	useEffect(() => {
+		const load = async () => {
+			setContext(await sdk.context);
+			sdk.actions.ready();
+		};
+		if (sdk && !isSDKLoaded) {
+			setIsSDKLoaded(true);
+			load();
+		}
+	}, [isSDKLoaded]);
+
+	const openUrl = useCallback(() => {
+		sdk.actions.openUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+	}, []);
+
+	if (!isSDKLoaded) {
+		return <div>Loading...</div>;
+	}
+
+	return (
+		<div className="w-[300px] mx-auto py-4 px-2">
+			<h1 className="text-2xl font-bold text-center mb-4">Frames v2 Demo</h1>
+
+			{/* context toggle and data */}
+
+			<div>
+				<h2 className="font-2xl font-bold">Actions</h2>
+
+				<div className="mb-4">
+					<div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
+						<pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
+							sdk.actions.openUrl
+						</pre>
+					</div>
+					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+					<button onClick={openUrl}>Open Link</button>
+				</div>
 			</div>
 		</div>
 	);
