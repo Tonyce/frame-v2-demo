@@ -104,6 +104,7 @@ export default function Demo() {
 		const load = async () => {
 			setContext(await sdk.context);
 			await sdk.actions.ready();
+			setIsSDKEnv(true);
 		};
 		if (sdk && !isSDKLoaded) {
 			setIsSDKLoaded(true);
