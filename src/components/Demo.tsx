@@ -99,6 +99,7 @@ export default function Demo() {
 	}, []);
 
 	useEffect(() => {
+		console.log("sdk", sdk);
 		const load = async () => {
 			setContext(await sdk.context);
 			sdk.actions.ready();
