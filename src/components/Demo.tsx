@@ -93,6 +93,7 @@ export default function Demo() {
 	const [isSDKLoaded, setIsSDKLoaded] = useState(false);
 	const [context, setContext] = useState<FrameContext>();
 	const [isContextOpen, setIsContextOpen] = useState(false);
+	const [isSDKEnv, setIsSDKEnv] = useState(false);
 
 	const toggleContext = useCallback(() => {
 		setIsContextOpen((prev) => !prev);
@@ -102,7 +103,7 @@ export default function Demo() {
 		console.log("sdk", sdk);
 		const load = async () => {
 			setContext(await sdk.context);
-			sdk.actions.ready();
+			await sdk.actions.ready();
 		};
 		if (sdk && !isSDKLoaded) {
 			setIsSDKLoaded(true);
@@ -120,6 +121,10 @@ export default function Demo() {
 
 	if (!isSDKLoaded) {
 		return <div>Loading...</div>;
+	}
+
+	if (!isSDKEnv) {
+		return <div>Normal</div>;
 	}
 
 	return (
